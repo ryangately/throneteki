@@ -1,22 +1,18 @@
 const DrawCard = require('../../../drawcard.js');
-
-class Melisandre extends DrawCard {
+ 
+class ShireenBaratheon extends DrawCard {
     constructor(owner, cardData) {
         super(owner, cardData);
 
-        this.registerEvents(['onCardPlayed', 'onBeginRound']);
+        this.registerEvents(['onCharacterKilled']);
     }
 
-    onBeginRound() {
-        this.abilityUsed = false;
-    }
-
-    onCardPlayed(event, player, card) {
-        if(this.controller !== player || this.abilityUsed || !card.hasTrait('R\'hllor')) {
+    onCharacterKilled(event, player, card) {
+        if(player !== this.controller || card !== this) {
             return;
         }
 
-        this.game.promptWithMenu(this.controller, this, {
+        this.game.promptWithMenu(player, this, {
             activePrompt: {
                 menuTitle: 'Trigger ' + this.name + '?',
                 buttons: [
@@ -25,7 +21,7 @@ class Melisandre extends DrawCard {
                 ]
             },
             waitingPromptTitle: 'Waiting for opponent to use ' + this.name
-        });       
+        });
     }
 
     kneel(player) {
@@ -49,7 +45,7 @@ class Melisandre extends DrawCard {
         this.game.addMessage('{0} uses {1} to kneel {2}', player, this, card);
 
         return true;
-    }    
+    } 
 
     cancel(player) {
         this.game.addMessage('{0} declines to trigger {1}', player, this);
@@ -58,6 +54,6 @@ class Melisandre extends DrawCard {
     }
 }
 
-Melisandre.code = '01047';
+ShireenBaratheon.code = '01051';
 
-module.exports = Melisandre;
+module.exports = ShireenBaratheon;
