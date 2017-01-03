@@ -108,13 +108,13 @@ class DrawCard extends BaseCard {
         }
 
         return this.strengthModifier + this.cardData.strength || 0;
-    }
+    }    
 
-    setIcon(icon) {
+    addIcon(icon) {
         this.icons[icon]++;
     }
 
-    clearIcon(icon) {
+    removeIcon(icon) {
         this.icons[icon]--;
     }
 
