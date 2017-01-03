@@ -14,7 +14,7 @@ class IronFleetScout extends DrawCard {
         });
     }    
 
-    sacrifice(player) {
+    kneel(player) {
         if(this.location !== 'play area' || !this.game.currentChallenge) {
             return false;
         }
