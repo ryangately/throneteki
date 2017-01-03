@@ -30,8 +30,6 @@ class DrawCard extends BaseCard {
         this.strengthModifier = 0;
         this.kneeled = false;
 
-        this.renownCount = this.hasKeyword('Renown') ? 1 : 0;
-
         this.wasAmbush = false;
     }
 
@@ -77,7 +75,7 @@ class DrawCard extends BaseCard {
     }
 
     hasIcon(icon) {
-        return this.icons[icon] > 0;
+        return this.icons[icon.toLowerCase()] > 0;
     }
 
     getCost() {
@@ -108,7 +106,43 @@ class DrawCard extends BaseCard {
         }
 
         return this.strengthModifier + this.cardData.strength || 0;
-    }    
+    }
+
+    getIconsAdded() {
+        var icons = [];
+
+        if(this.hasIcon('military') && !this.cardData.is_military) {
+            icons.push('military');
+        }
+
+        if(this.hasIcon('intrigue') && !this.cardData.is_intrigue) {
+            icons.push('intrigue');
+        }
+
+        if(this.hasIcon('power') && !this.cardData.is_power) {
+            icons.push('power');
+        }
+
+        return icons;
+    }
+
+    getIconsRemoved() {
+        var icons = [];
+
+        if(!this.hasIcon('military') && this.cardData.is_military) {
+            icons.push('military');
+        }
+
+        if(!this.hasIcon('intrigue') && this.cardData.is_intrigue) {
+            icons.push('intrigue');
+        }
+
+        if(!this.hasIcon('power') && this.cardData.is_power) {
+            icons.push('power');
+        }
+
+        return icons;
+    }
 
     addIcon(icon) {
         this.icons[icon]++;
@@ -184,6 +218,8 @@ class DrawCard extends BaseCard {
             dupes: this.dupes.map(dupe => {
                 return dupe.getSummary(isActivePlayer, hideWhenFaceup);
             }),
+            iconsAded: this.getIconsAdded(),
+            iconsRemoved: this.getIconsRemoved(),            
             kneeled: this.kneeled,
             power: this.power,
             strength: !_.isNull(this.cardData.strength) ? this.getStrength() : undefined
