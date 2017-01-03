@@ -44,8 +44,8 @@ class LordsportShipright extends DrawCard {
     }
 
     onCardSelected(player, card) {
-        this.kneeled = true;
-        card.kneeled = true;
+        player.kneelCard(this);
+        player.kneelCard(card);
 
         this.game.addMessage('{0} uses {1} to kneel {2}', player, this, card);
 

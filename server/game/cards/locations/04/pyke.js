@@ -32,7 +32,7 @@ class Pyke extends DrawCard {
     }
 
     onCardSelected(player, card) {
-        this.kneeled = true;
+        player.kneelCard(this);
 
         card.addKeyword('Stealth');
         this.modifiedCard = card;

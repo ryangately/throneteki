@@ -38,7 +38,7 @@ class AsshaiPriestess extends DrawCard {
     }
 
     onCardSelected(player, card) {
-        card.kneeled = true;
+        player.kneelCard(card);
 
         this.game.addMessage('{0} uses {1} to kneel {2}', player, this, card);
 
